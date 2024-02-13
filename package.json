@@ -16,6 +16,7 @@
         "jquery.client",
         "jquery.textSelection",
         "mediawiki",
+        "mediawiki.util",
         "index.d.ts"
     ],
     "license": "GPL-3.0-or-later",
