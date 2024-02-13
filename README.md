@@ -22,13 +22,23 @@ npm i types-mediawiki
 
 Edit your project's `tsconfig.json` file so that it includes
 
-```
-"include": [
-  "./node_modules/types-mediawiki"
-]
+```js
+"compilerOptions": {
+  ...
+  "typeRoots": ["./node_modules/@types", ..., "./node_modules/types-mediawiki"]
+}
 ```
 
 You should be all set! `mw` will be available in the global scope. There is no need to put any import statements in the TypeScript source files.
+
+If you only want to only include a few MediaWiki modules for your project, you can always limit their access:
+
+```js
+"compilerOptions": {
+  ...
+  "types": ["mediawiki.base", "mediawiki.ForeignApi", "mediawiki.language"]
+}
+```
 
 **If you find any errors or have suggestions for more specific typings, please open a PR or file an issue.**
 
