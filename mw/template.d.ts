@@ -1,9 +1,3 @@
-type CompiledTemplate = any; // Can this be made more specific?
-
-interface Compiler {
-    compile(src: string): CompiledTemplate;
-}
-
 declare global {
     namespace mw {
         /**
@@ -12,6 +6,12 @@ declare global {
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.template
          */
         namespace template {
+            type CompiledTemplate = any; // Can this be made more specific?
+
+            interface Compiler {
+                compile(src: string): CompiledTemplate;
+            }
+
             /**
              * Register a new compiler.
              *

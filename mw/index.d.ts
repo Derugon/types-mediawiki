@@ -21,24 +21,6 @@ import "./Uri";
 import "./user";
 import "./util";
 
-type ObjectAnalyticEventData = Record<string, any>;
-type AnalyticEventData = ObjectAnalyticEventData | number | string | undefined;
-
-interface ErrorAnalyticEventData extends ObjectAnalyticEventData {
-    exception?: any;
-    module?: string;
-    source: string;
-}
-
-interface AnalyticEvent {
-    topic: string;
-    data: AnalyticEventData;
-}
-
-interface AnalyticEventCallback {
-    (topic: string, data: AnalyticEventData): void;
-}
-
 declare global {
     /**
      * Base library for MediaWiki.
@@ -57,6 +39,25 @@ declare global {
      * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw
      */
     namespace mw {
+        type ObjectAnalyticEventData = Record<string, any>;
+
+        type AnalyticEventData = ObjectAnalyticEventData | number | string | undefined;
+
+        interface ErrorAnalyticEventData extends ObjectAnalyticEventData {
+            exception?: any;
+            module?: string;
+            source: string;
+        }
+
+        interface AnalyticEvent {
+            topic: string;
+            data: AnalyticEventData;
+        }
+
+        interface AnalyticEventCallback {
+            (topic: string, data: AnalyticEventData): void;
+        }
+
         /**
          * Empty object for third-party libraries, for cases where you don't
          * want to add a new global, or the global is bad and needs containment

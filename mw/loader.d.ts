@@ -1,71 +1,3 @@
-interface Module {
-    exports: any;
-}
-
-type ModuleKey = `${string}@${string}`;
-type ModuleState =
-    | "error"
-    | "executing"
-    | "loaded"
-    | "loading"
-    | "missing"
-    | "ready"
-    | "registered";
-type ModuleMessages = Record<string, string>;
-type ModuleStyle = Record<string, any>;
-type ModuleTemplates = Record<string, any>;
-
-interface ModuleDeclarator {
-    (): [
-        module: string,
-        script?: ModuleScript | null,
-        style?: ModuleStyle | null,
-        messages?: ModuleMessages | null,
-        templates?: ModuleTemplates | null,
-        deprecationWarning?: string | null
-    ];
-}
-
-interface ModuleRequire {
-    /**
-     * Get the exported value of a module.
-     *
-     * @param moduleName Module name
-     * @returns Exported value
-     */
-    (moduleName: string): any;
-}
-
-type ModuleScript =
-    | string[]
-    | (($: JQuery, jQuery: JQuery, require: ModuleRequire, module: Module) => void)
-    | {
-          files: { [key: string]: any };
-          main: string;
-      }
-    | string;
-
-interface ModuleRegistryEntry {
-    declarator?: ModuleDeclarator | null;
-    dependencies: string[];
-    deprecationWarning?: string | null;
-    group: number | null;
-    messages?: ModuleMessages | null;
-    module: Module;
-    packageExports: any;
-    skip: string | null;
-    source: string;
-    state: "error" | "loaded" | "missing" | "registered" | "ready";
-    version: string;
-}
-
-interface ResourceLoaderStoreStats {
-    expired: number;
-    failed: number;
-    hits: number;
-    misses: number;
-}
-
 declare global {
     namespace mw {
         /**
@@ -81,6 +13,74 @@ declare global {
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader
          */
         namespace loader {
+            interface Module {
+                exports: any;
+            }
+
+            type ModuleKey = `${string}@${string}`;
+            type ModuleState =
+                | "error"
+                | "executing"
+                | "loaded"
+                | "loading"
+                | "missing"
+                | "ready"
+                | "registered";
+            type ModuleMessages = Record<string, string>;
+            type ModuleStyle = Record<string, any>;
+            type ModuleTemplates = Record<string, any>;
+
+            interface ModuleDeclarator {
+                (): [
+                    module: string,
+                    script?: ModuleScript | null,
+                    style?: ModuleStyle | null,
+                    messages?: ModuleMessages | null,
+                    templates?: ModuleTemplates | null,
+                    deprecationWarning?: string | null
+                ];
+            }
+
+            interface ModuleRequire {
+                /**
+                 * Get the exported value of a module.
+                 *
+                 * @param moduleName Module name
+                 * @returns Exported value
+                 */
+                (moduleName: string): any;
+            }
+
+            type ModuleScript =
+                | string[]
+                | (($: JQuery, jQuery: JQuery, require: ModuleRequire, module: Module) => void)
+                | {
+                      files: { [key: string]: any };
+                      main: string;
+                  }
+                | string;
+
+            interface ModuleRegistryEntry {
+                declarator?: ModuleDeclarator | null;
+                dependencies: string[];
+                deprecationWarning?: string | null;
+                group: number | null;
+                messages?: ModuleMessages | null;
+                module: Module;
+                packageExports: any;
+                skip: string | null;
+                source: string;
+                state: "error" | "loaded" | "missing" | "registered" | "ready";
+                version: string;
+            }
+
+            interface ResourceLoaderStoreStats {
+                expired: number;
+                failed: number;
+                hits: number;
+                misses: number;
+            }
+
             /**
              * Create a new style element and add it to the DOM.
              *

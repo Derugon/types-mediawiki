@@ -1,24 +1,24 @@
-interface Experiment {
-    /**
-     * The name of the experiment
-     */
-    name: string;
-    /**
-     * Whether the experiment is enabled. If the experiment is disabled, then the user is always assigned to the control bucket
-     */
-    enabled: boolean;
-    /**
-     * A map of bucket name to probability that the user will be assigned to that bucket
-     */
-    buckets: Record<string, number>;
-}
-
 declare global {
     namespace mw {
         /**
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.experiments
          */
         namespace experiments {
+            interface Experiment {
+                /**
+                 * The name of the experiment
+                 */
+                name: string;
+                /**
+                 * Whether the experiment is enabled. If the experiment is disabled, then the user is always assigned to the control bucket
+                 */
+                enabled: boolean;
+                /**
+                 * A map of bucket name to probability that the user will be assigned to that bucket
+                 */
+                buckets: Record<string, number>;
+            }
+
             /**
              * Gets the bucket for the experiment given the token.
              *
