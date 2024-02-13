@@ -1,3 +1,3 @@
 import "./utils";
-import "./mw";
+import "./mediawiki";
 import "./jquery";

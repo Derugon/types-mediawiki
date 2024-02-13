@@ -12,10 +12,10 @@
         "url": "git+https://github.com/wikimedia-gadgets/types-mediawiki.git"
     },
     "files": [
-        "mw",
+        "mediawiki",
         "jquery",
-        "api_params",
-        "index.d.ts"
+        "index.d.ts",
+        "utils.d.ts"
     ],
     "license": "GPL-3.0-or-later",
     "bugs": {
