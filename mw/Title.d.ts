@@ -1,6 +1,6 @@
 declare global {
     namespace mw {
-        type TitleLike = string | mw.Title;
+        type TitleLike = string | Title;
 
         /**
          * Parse titles into an object structure. Note that when using the constructor

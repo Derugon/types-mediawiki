@@ -54,12 +54,12 @@ declare global {
              * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.user-property-options
              */
             // TODO: add types for items in the options map
-            options: mw.Map;
+            options: Map;
 
             /**
              * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.user-property-tokens
              */
-            tokens: mw.Map<User.Tokens>;
+            tokens: Map<User.Tokens>;
 
             /**
              * Acquire a temporary user username and stash it in the current session, if temp account creation

@@ -15,9 +15,9 @@ const queryApiData = await new mw.Api().get({
     formatversion: "2",
 });
 
-function processParamInfo(type, name, multi) {
+function processParamInfo(type, name, prefix, multi) {
     if (Array.isArray(type)) {
-        type = type.map((e) => `'${e}'`).join(" | ");
+        type = type.map((e) => `"${e}"`).join(" | ");
         if (multi) {
             // can be single item or array of items
             type = `OneOrMore<${type}>`;
@@ -42,49 +42,44 @@ function processParamInfo(type, name, multi) {
         name === "site" // gusite used by ApiQueryGlobalUsage
     ) {
         type = "string | string[]";
-    } else if (name.includes(`-`)) {
-        name = `'${name}'`;
+    }
+
+    name = prefix + name;
+    if (name.includes(`-`)) {
+        name = `"${name}"`;
     }
     return { name, type };
 }
 
-function getInterfaceName(module) {
-    return module.classname
-        .replace(/\\/g, "")
-        .replace(/^MediaWikiExtensions?/, "")
-        .replace(/ApiApi/g, "Api");
+function indent(l) {
+    return `\t${l}`;
 }
 
-const actionsTypes = data.paraminfo.modules
-    .map((module) => {
-        return (
-            `export interface ${getInterfaceName(module)}Params extends ApiParams {\n` +
-            module.parameters
-                .map((param) => {
-                    const { name, type } = processParamInfo(param.type, param.name, param.multi);
-                    return `${name}?: ${type}`;
-                })
-                .join("\n")
-                .replace(/^/gm, "\t") +
-            `\n}`
-        );
-    })
-    .join("\n\n");
+function getInterfaceName(module) {
+    return module.classname.split("\\").pop().replace(/Api/g, "") + "Params";
+}
 
-const queryTypes = queryApiData.paraminfo.modules
-    .map((module) => {
-        return (
-            `export interface ${getInterfaceName(module)}Params extends ApiQueryParams {\n` +
-            module.parameters
-                .map((param) => {
-                    const { name, type } = processParamInfo(param.type, param.name, param.multi);
-                    return `${module.prefix}${name}?: ${type}`;
-                })
-                .join("\n")
-                .replace(/^/gm, "\t") +
-            `\n}`
-        );
-    })
-    .join("\n\n");
+function formatInterface(module) {
+    const name = getInterfaceName(module);
 
-console.log(actionsTypes + "\n\n" + queryTypes);
+    return [
+        `interface ${name} extends Params {`,
+        ...module.parameters.map((param) => {
+            const { name, type } = processParamInfo(
+                param.type,
+                param.name,
+                module.prefix,
+                param.multi
+            );
+            return `\t${name}?: ${type};`;
+        }),
+        "}",
+    ]
+        .map(indent)
+        .join("\n");
+}
+
+const actionsTypes = data.paraminfo.modules.map(formatInterface).join("\n\n");
+const queryTypes = queryApiData.paraminfo.modules.map(formatInterface).join("\n\n");
+
+console.log(["declare namespace mw.Api {", actionsTypes, "", queryTypes, "}"].join("\n"));
