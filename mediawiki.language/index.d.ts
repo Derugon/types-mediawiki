@@ -1,5 +1,5 @@
-/// <reference types="../mediawiki.cldr" />
+import "../mediawiki.cldr";
 
-/// <reference path="./language.d.ts" />
+import "./language.d.ts";
 
 export {};

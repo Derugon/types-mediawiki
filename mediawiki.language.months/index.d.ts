@@ -1,5 +1,5 @@
-/// <reference types="../mediawiki.language" />
+import "../mediawiki.language";
 
-/// <reference path="./language.months.d.ts" />
+import "./language.months.d.ts";
 
 export {};

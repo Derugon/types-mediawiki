@@ -1,8 +1,8 @@
-/// <reference types="../mediawiki.language" />
-/// <reference types="../mediawiki.String" />
-/// <reference types="../mediawiki.util" />
-/// <reference types="../user.options" />
+import "../mediawiki.language";
+import "../mediawiki.String";
+import "../mediawiki.util";
+import "../user.options";
 
-/// <reference path="Message.d.ts" />
+import "./Message.d.ts";
 
 export {};

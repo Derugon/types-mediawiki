@@ -1,5 +1,5 @@
-/// <reference types="../mediawiki.util" />
+import "../mediawiki.util";
 
-/// <reference path="./Uri.d.ts" />
+import "./Uri.d.ts";
 
 export {};

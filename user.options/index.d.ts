@@ -1,3 +1,3 @@
-/// <reference path="./user.d.ts" />
+import "./user.d.ts";
 
 export {};

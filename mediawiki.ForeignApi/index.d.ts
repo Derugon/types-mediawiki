@@ -1,3 +1,3 @@
-/// <reference types="../mediawiki.ForeignApi.core" />
+import "../mediawiki.ForeignApi.core";
 
 export {};

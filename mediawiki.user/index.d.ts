@@ -1,7 +1,7 @@
-/// <reference types="../mediawiki.api" />
-/// <reference types="../mediawiki.cookie" />
-/// <reference types="../user.options" />
+import "../mediawiki.api";
+import "../mediawiki.cookie";
+import "../user.options";
 
-/// <reference path="./user.d.ts" />
+import "./user.d.ts";
 
 export {};

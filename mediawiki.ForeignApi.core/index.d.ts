@@ -1,9 +1,9 @@
-/// <reference types="oojs" />
-/// <reference types="../mediawiki.api" />
-/// <reference types="../mediawiki.Uri" />
+import "oojs";
+import "../mediawiki.api";
+import "../mediawiki.Uri";
 
-/// <reference path="ForeignApi.d.ts" />
-/// <reference path="ForeignRest.d.ts" />
+import "./ForeignApi.d.ts";
+import "./ForeignRest.d.ts";
 
 export const ForeignApi: typeof mw.ForeignApi;
 export const ForeignRest: typeof mw.ForeignRest;

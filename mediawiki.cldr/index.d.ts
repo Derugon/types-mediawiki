@@ -1,4 +1,4 @@
-/// <reference types="../mediawiki.base" />
-/// <reference types="../mediawiki.libs.pluralruleparser" />
+import "../mediawiki.base";
+import "../mediawiki.libs.pluralruleparser";
 
 export {};

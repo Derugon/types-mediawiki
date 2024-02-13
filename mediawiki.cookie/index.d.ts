@@ -1,5 +1,5 @@
-/// <reference types="../mediawiki.base" />
+import "../mediawiki.base";
 
-/// <reference path="cookie.d.ts" />
+import "./cookie.d.ts";
 
 export {};

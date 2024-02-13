@@ -1,7 +1,7 @@
-/// <reference types="../jquery.client" />
-/// <reference types="../mediawiki.base" />
+import "../jquery.client";
+import "../mediawiki.base";
 
-/// <reference path="RegExp.d.ts" />
-/// <reference path="util.d.ts" />
+import "./RegExp.d.ts";
+import "./util.d.ts";
 
 export = mw.util;

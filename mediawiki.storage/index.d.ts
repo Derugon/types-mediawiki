@@ -1,6 +1,6 @@
-/// <reference types="../mediawiki.util" />
+import "../mediawiki.util";
 
-/// <reference path="./storage.d.ts" />
+import "./storage.d.ts";
 
 export const local: mw.Storage;
 export const session: mw.SafeStorage;

@@ -1,6 +1,6 @@
-/// <reference types="../mediawiki.util" />
-/// <reference types="../mediawiki.visibleTimeout" />
+import "../mediawiki.util";
+import "../mediawiki.visibleTimeout";
 
-/// <reference path="notification.d.ts" />
+import "./notification.d.ts";
 
 export {};

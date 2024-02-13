@@ -1,6 +1,6 @@
-/// <reference types="../mediawiki.String" />
-/// <reference types="../mediawiki.util" />
+import "../mediawiki.String";
+import "../mediawiki.util";
 
-/// <reference path="Title.d.ts" />
+import "./Title.d.ts";
 
 export {};

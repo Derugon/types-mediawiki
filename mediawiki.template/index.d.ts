@@ -1,5 +1,5 @@
-/// <reference types="../mediawiki.base" />
+import "../mediawiki.base";
 
-/// <reference path="./template.d.ts" />
+import "./template.d.ts";
 
 export {};

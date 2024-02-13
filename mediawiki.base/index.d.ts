@@ -1,15 +1,15 @@
-/// <reference types="jquery" />
-/// <reference types="../mediawiki" />
+import "jquery";
+import "../mediawiki";
 
-/// <reference path="errorLogger.d.ts" />
-/// <reference path="global.d.ts" />
-/// <reference path="hook.d.ts" />
-/// <reference path="html.d.ts" />
-/// <reference path="loader.d.ts" />
-/// <reference path="log.d.ts" />
-/// <reference path="Message.d.ts" />
-/// <reference path="mw.d.ts" />
-/// <reference path="notification.d.ts" />
-/// <reference path="user.d.ts" />
+import "./errorLogger.d.ts";
+import "./global.d.ts";
+import "./hook.d.ts";
+import "./html.d.ts";
+import "./loader.d.ts";
+import "./log.d.ts";
+import "./Message.d.ts";
+import "./mw.d.ts";
+import "./notification.d.ts";
+import "./user.d.ts";
 
 export {};

@@ -1,27 +1,26 @@
-/// <reference types="./jquery" />
-/// <reference types="./jquery.client" />
-/// <reference types="./jquery.textSelection" />
-/// <reference types="./mediawiki" />
-/// <reference types="./mediawiki.api" />
-/// <reference types="./mediawiki.base" />
-/// <reference types="./mediawiki.cldr" />
-/// <reference types="./mediawiki.cookie" />
-/// <reference types="./mediawiki.experiments" />
-/// <reference types="./mediawiki.ForeignApi" />
-/// <reference types="./mediawiki.ForeignApi.core" />
-/// <reference types="./mediawiki.jqueryMsg" />
-/// <reference types="./mediawiki.language" />
-/// <reference types="./mediawiki.language.months" />
-/// <reference types="./mediawiki.libs.pluralruleparser" />
-/// <reference types="./mediawiki.notification" />
-/// <reference types="./mediawiki.storage" />
-/// <reference types="./mediawiki.String" />
-/// <reference types="./mediawiki.template" />
-/// <reference types="./mediawiki.Title" />
-/// <reference types="./mediawiki.Uri" />
-/// <reference types="./mediawiki.user" />
-/// <reference types="./mediawiki.util" />
-/// <reference types="./mediawiki.visibleTimeout" />
+import "./jquery";
+import "./jquery.client";
+import "./jquery.textSelection";
+import "./mediawiki";
+import "./mediawiki.api";
+import "./mediawiki.base";
+import "./mediawiki.cldr";
+import "./mediawiki.cookie";
+import "./mediawiki.experiments";
+import "./mediawiki.ForeignApi";
+import "./mediawiki.ForeignApi.core";
+import "./mediawiki.jqueryMsg";
+import "./mediawiki.language";
+import "./mediawiki.language.months";
+import "./mediawiki.libs.pluralruleparser";
+import "./mediawiki.notification";
+import "./mediawiki.storage";
+import "./mediawiki.String";
+import "./mediawiki.template";
+import "./mediawiki.Title";
+import "./mediawiki.Uri";
+import "./mediawiki.user";
+import "./mediawiki.util";
+import "./mediawiki.visibleTimeout";
 
 export = mw;
-export as namespace mw;
