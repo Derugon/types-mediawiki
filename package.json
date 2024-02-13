@@ -12,8 +12,10 @@
         "url": "git+https://github.com/wikimedia-gadgets/types-mediawiki.git"
     },
     "files": [
-        "mediawiki",
         "jquery",
+        "jquery.client",
+        "jquery.textSelection",
+        "mediawiki",
         "index.d.ts"
     ],
     "license": "GPL-3.0-or-later",

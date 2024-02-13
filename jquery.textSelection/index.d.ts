@@ -1,3 +1,5 @@
+import "../jquery.client";
+
 declare global {
     interface JQuery {
         /**
@@ -45,13 +47,13 @@ declare global {
          * Also focusses the textarea.
          *
          * @param {string} command Command to execute
-         * @param {TextSelectionEncapsulateOptions} [options]
+         * @param {JQuery.textSelection.EncapsulateOptions} [options]
          * @returns {JQuery}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/jQuery.plugin.textSelection-method-textSelection
          */
         textSelection(
             command: "encapsulateSelection",
-            options?: Partial<TextSelectionEncapsulateOptions>
+            options?: Partial<JQuery.textSelection.EncapsulateOptions>
         ): this;
 
         /**
@@ -136,45 +138,47 @@ declare global {
          */
         textSelection(command: string, commandOptions?: unknown): any;
     }
-}
 
-interface TextSelectionEncapsulateOptions {
-    /**
-     * Text to insert before the cursor/selection.
-     */
-    pre: string;
-    /**
-     * Text to insert between pre and post and select afterwards.
-     */
-    peri: string;
-    /**
-     * Text to insert after the cursor/selection.
-     */
-    post: string;
-    /**
-     * Put the inserted text on a line of its own. Defaults to false.
-     */
-    ownline: boolean;
-    /**
-     * If there is a selection, replace it with peri instead of leaving it alone. Defaults to false.
-     */
-    replace: boolean;
-    /**
-     * Select the peri text if it was inserted (but not if there was a selection and replace==false, or if splitlines==true). Defaults to true.
-     */
-    selectPeri: boolean;
-    /**
-     * If multiple lines are selected, encapsulate each line individually. Defaults to false.
-     */
-    splitlines: boolean;
-    /**
-     * Position to start selection at.
-     */
-    selectionStart: number;
-    /**
-     * Position to end selection at. Defaults to the position to start setection at.
-     */
-    selectionEnd: number;
+    namespace JQuery.textSelection {
+        interface EncapsulateOptions {
+            /**
+             * Text to insert before the cursor/selection.
+             */
+            pre: string;
+            /**
+             * Text to insert between pre and post and select afterwards.
+             */
+            peri: string;
+            /**
+             * Text to insert after the cursor/selection.
+             */
+            post: string;
+            /**
+             * Put the inserted text on a line of its own. Defaults to false.
+             */
+            ownline: boolean;
+            /**
+             * If there is a selection, replace it with peri instead of leaving it alone. Defaults to false.
+             */
+            replace: boolean;
+            /**
+             * Select the peri text if it was inserted (but not if there was a selection and replace==false, or if splitlines==true). Defaults to true.
+             */
+            selectPeri: boolean;
+            /**
+             * If multiple lines are selected, encapsulate each line individually. Defaults to false.
+             */
+            splitlines: boolean;
+            /**
+             * Position to start selection at.
+             */
+            selectionStart: number;
+            /**
+             * Position to end selection at. Defaults to the position to start setection at.
+             */
+            selectionEnd: number;
+        }
+    }
 }
 
 export {};

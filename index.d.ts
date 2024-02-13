@@ -2,5 +2,8 @@
 
 import "./jquery";
 
+import "./jquery.client";
+import "./jquery.textSelection";
+
 export = mw;
 export as namespace mw;
