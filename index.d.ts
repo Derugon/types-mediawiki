@@ -1,11 +1,10 @@
 /// <reference path="mediawiki/index.d.ts" />
 
-import "./jquery";
+/// <reference types="./jquery" />
+/// <reference types="./jquery.client" />
+/// <reference types="./jquery.textSelection" />
 
-import "./jquery.client";
-import "./jquery.textSelection";
-
-import "./mediawiki.util";
+/// <reference types="./mediawiki.util" />
 
 export = mw;
 export as namespace mw;

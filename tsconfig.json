@@ -2,6 +2,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "lib": ["es5", "dom"],
+        "forceConsistentCasingInFileNames": false,
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": true,
