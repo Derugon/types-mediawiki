@@ -14,8 +14,7 @@
     "files": [
         "mediawiki",
         "jquery",
-        "index.d.ts",
-        "utils.d.ts"
+        "index.d.ts"
     ],
     "license": "GPL-3.0-or-later",
     "bugs": {
