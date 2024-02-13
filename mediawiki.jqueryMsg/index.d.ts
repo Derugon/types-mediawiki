@@ -3,4 +3,6 @@
 /// <reference types="../mediawiki.util" />
 /// <reference types="../user.options" />
 
+/// <reference path="Message.d.ts" />
+
 export {};

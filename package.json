@@ -17,6 +17,7 @@
         "jquery.textSelection",
         "mediawiki",
         "mediawiki.api",
+        "mediawiki.base",
         "mediawiki.cldr",
         "mediawiki.cookie",
         "mediawiki.experiments",

@@ -16,6 +16,7 @@ declare namespace mw.loader {
     }
 
     type ModuleKey = `${string}@${string}`;
+
     type ModuleState =
         | "error"
         | "executing"
@@ -24,6 +25,7 @@ declare namespace mw.loader {
         | "missing"
         | "ready"
         | "registered";
+
     type ModuleMessages = Record<string, string>;
     type ModuleStyle = Record<string, any>;
     type ModuleTemplates = Record<string, any>;
@@ -72,13 +74,6 @@ declare namespace mw.loader {
         version: string;
     }
 
-    interface ResourceLoaderStoreStats {
-        expired: number;
-        failed: number;
-        hits: number;
-        misses: number;
-    }
-
     /**
      * Create a new style element and add it to the DOM.
      *
@@ -89,38 +84,6 @@ declare namespace mw.loader {
      * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader-method-addStyleTag
      */
     function addStyleTag(text: string, nextNode?: Node | null): HTMLStyleElement;
-
-    /**
-     * Get the names of all registered ResourceLoader modules.
-     *
-     * @returns {string[]}
-     * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader-method-getModuleNames
-     */
-    function getModuleNames(): string[];
-
-    /**
-     * Load a script by URL.
-     *
-     * Example:
-     *
-     * ```js
-     * mw.loader.getScript(
-     *     'https://example.org/x-1.0.0.js'
-     * )
-     *     .then( function () {
-     *         // Script succeeded. You can use X now.
-     *     }, function ( e ) {
-     *         // Script failed. X is not avaiable
-     *         mw.log.error( e.message ); // => "Failed to load script"
-     *     } );
-     * } );
-     * ```
-     *
-     * @param {string} url Script URL
-     * @returns {JQuery.Promise} Resolved when the script is loaded
-     * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader-method-getScript
-     */
-    function getScript(url: string): JQuery.Promise<any>;
 
     /**
      * Get the state of a module.
@@ -293,53 +256,6 @@ declare namespace mw.loader {
     function state(states: Record<string, ModuleState>): void;
 
     /**
-     * Execute a function after one or more modules are ready.
-     *
-     * Use this method if you need to dynamically control which modules are loaded
-     * and/or when they loaded (instead of declaring them as dependencies directly
-     * on your module.)
-     *
-     * This uses the same loader as for regular module dependencies. This means
-     * ResourceLoader will not re-download or re-execute a module for the second
-     * time if something else already needed it. And the same browser HTTP cache,
-     * and localStorage are checked before considering to fetch from the network.
-     * And any on-going requests from other dependencies or using() calls are also
-     * automatically re-used.
-     *
-     * Example of inline dependency on OOjs:
-     *
-     * ```js
-     * mw.loader.using( 'oojs', function () {
-     *     OO.compare( [ 1 ], [ 1 ] );
-     * } );
-     * ```
-     *
-     * Example of inline dependency obtained via `require()`:
-     *
-     * ```js
-     * mw.loader.using( [ 'mediawiki.util' ], function ( require ) {
-     *     var util = require( 'mediawiki.util' );
-     * } );
-     * ```
-     *
-     * Since MediaWiki 1.23 this returns a promise.
-     *
-     * Since MediaWiki 1.28 the promise is resolved with a `require` function.
-     *
-     * @param {string|string[]} dependencies Module name or array of modules names the
-     *  callback depends on to be ready before executing
-     * @param {Function} [ready] Callback to execute when all dependencies are ready
-     * @param {Function} [error] Callback to execute if one or more dependencies failed
-     * @returns {JQuery.Promise<ModuleRequire>} With a `require` function
-     * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader-method-using
-     */
-    function using(
-        dependencies: string | string[],
-        ready?: (require: ModuleRequire) => void,
-        error?: (error: Error, ...args: any[]) => void
-    ): JQuery.Promise<ModuleRequire>;
-
-    /**
      * Exposed for testing and debugging only.
      *
      * @private
@@ -436,163 +352,4 @@ declare namespace mw.loader {
      * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader-method-work
      */
     function work(): void;
-
-    /**
-     * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store
-     */
-    namespace store {
-        /**
-         * The localStorage key for the entire module store. The key references
-         * $wgDBname to prevent clashes between wikis which share a common host.
-         *
-         * @property {string}
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-property-key
-         */
-        const key: string;
-
-        /**
-         * A string containing various factors by which the module cache should vary.
-         *
-         * Defined by ResourceLoader\StartupModule::getStoreVary() in PHP.
-         *
-         * @property {string}
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-property-vary
-         */
-        const vary: string;
-
-        /**
-         * Queue the name of a module that the next update should consider storing.
-         *
-         * @since 1.32
-         * @param {string} module Module name
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-add
-         */
-        function add(module: string): void;
-
-        /**
-         * Clear the entire module store right now.
-         *
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-clear
-         */
-        function clear(): void;
-
-        /**
-         * Retrieve a module from the store and update cache hit stats.
-         *
-         * @param {string} module Module name
-         * @returns {string|boolean} Module implementation or false if unavailable
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-get
-         */
-        function get(module: string): string | false;
-
-        /**
-         * Initialize the store.
-         *
-         * Retrieves store from localStorage and (if successfully retrieved) decoding
-         * the stored JSON value to a plain object.
-         *
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-init
-         */
-        function init(): void;
-
-        /**
-         * Internal helper for {@link init()}. Separated for ease of testing.
-         *
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-load
-         */
-        function load(): void;
-
-        /**
-         * Iterate through the module store, removing any item that does not correspond
-         * (in name and version) to an item in the module registry.
-         *
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-prune
-         */
-        function prune(): void;
-
-        /**
-         * Construct a JSON-serializable object representing the content of the store.
-         *
-         * @returns {Object} Module store contents.
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-toJSON
-         */
-        function toJSON(): { items: string; vary: string; asOf: number };
-
-        /**
-         * Whether the store is in use on this page.
-         *
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/source/mediawiki.loader.html
-         */
-        const enabled: boolean | null;
-
-        /**
-         * The contents of the store, mapping '[name]@[version]' keys
-         * to module implementations.
-         *
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/source/mediawiki.loader.html
-         */
-        const items: Record<ModuleKey, any>;
-
-        /**
-         * Names of modules to be stored during the next update.
-         *
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/source/mediawiki.loader.html
-         */
-        const queue: string[];
-
-        /**
-         * Cache hit stats
-         *
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/source/mediawiki.loader.html
-         */
-        const stats: ResourceLoaderStoreStats;
-
-        /**
-         * Add the contents of the named module to the in-memory store.
-         *
-         * This method does not guarantee that the module will be stored.
-         * Inspection of the module's meta data and size will ultimately decide that.
-         *
-         * This method is considered internal to mw.loader.store and must only
-         * be called if the store is enabled.
-         *
-         * @private
-         * @param {string} module Module name
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-set
-         */
-        function set(module: string): void;
-
-        /**
-         * Request a sync of the in-memory store back to persisted localStorage.
-         *
-         * This function debounces updates. The debouncing logic should account
-         * for the following factors:
-         *
-         * - Writing to localStorage is an expensive operation that must not happen
-         *   during the critical path of initialising and executing module code.
-         *   Instead, it should happen at a later time after modules have been given
-         *   time and priority to do their thing first.
-         *
-         * - This method is called from {@link mw.loader.store.add()}, which will be called
-         *   hundreds of times on a typical page, including within the same call-stack
-         *   and eventloop-tick. This is because responses from load.php happen in
-         *   batches. As such, we want to allow all modules from the same load.php
-         *   response to be written to disk with a single flush, not many.
-         *
-         * - Repeatedly deleting and creating timers is non-trivial.
-         *
-         * - localStorage is shared by all pages from the same origin, if multiple
-         *   pages are loaded with different module sets, the possibility exists that
-         *   modules saved by one page will be clobbered by another. The impact of
-         *   this is minor, it merely causes a less efficient cache use, and the
-         *   problem would be corrected by subsequent page views.
-         *
-         * This method is considered internal to mw.loader.store and must only
-         * be called if the store is enabled.
-         *
-         * @private
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader.store-method-requestUpdate
-         */
-        function requestUpdate(): void;
-    }
 }

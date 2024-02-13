@@ -1,24 +1,5 @@
 declare namespace mw {
     /**
-     * Get a message object.
-     *
-     * Shortcut for `new mw.Message( mw.messages, key, parameters )`.
-     *
-     * @param {string} key Key of message to get
-     * @param {...Mixed} parameters Values for $N replacements
-     * @returns {Message}
-     * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw-method-message
-     */
-    function message(key: string, ...parameters: any[]): Message;
-
-    /**
-     * Store for messages.
-     *
-     * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw-property-messages
-     */
-    const messages: Map<{ [key: string]: string }>;
-
-    /**
      * Object constructor for messages.
      *
      * Similar to the Message class in MediaWiki PHP.
@@ -129,17 +110,6 @@ declare namespace mw {
         exists(): boolean;
 
         /**
-         * Check whether the message contains only syntax supported by jqueryMsg.
-         *
-         * This method is only available when jqueryMsg is loaded.
-         *
-         * @since 1.41
-         * @returns {boolean}
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Message-method-isParseable
-         */
-        isParseable(): boolean;
-
-        /**
          * Add (does not replace) parameters for `$N` placeholder values.
          *
          * @param {Array} parameters
@@ -158,17 +128,6 @@ declare namespace mw {
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Message-method-parse
          */
         parse(): string;
-
-        /**
-         * Parse the message to DOM nodes, rather than HTML string like {@link parse}.
-         *
-         * This method is only available when jqueryMsg is loaded.
-         *
-         * @since 1.27
-         * @returns {JQuery}
-         * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Message-method-parseDom
-         */
-        parseDom(): JQuery;
 
         /**
          * Get parsed contents of the message.
@@ -224,16 +183,4 @@ declare namespace mw {
          */
         private toString(format?: "escaped" | "parse" | "plain" | "text"): string;
     }
-
-    /**
-     * Get a message string using the (default) 'text' format.
-     *
-     * Shortcut for `mw.message( key, parameters... ).text()`.
-     *
-     * @param {string} key Key of message to get
-     * @param {...Mixed} parameters Values for $N replacements
-     * @returns {string}
-     * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw-method-msg
-     */
-    function msg(key: string, ...parameters: any[]): string;
 }

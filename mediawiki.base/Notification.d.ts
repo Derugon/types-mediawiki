@@ -1,19 +1,5 @@
 declare namespace mw {
     /**
-     * Display a notification message to the user.
-     *
-     * @param {HTMLElement|HTMLElement[]|JQuery|Message|string} message
-     * @param {Partial<Notification.Options>} [options] The options to use for the notification.
-     *  See {@link Notification.Options defaults} for details.
-     * @returns {JQuery.Promise<Notification>} Notification object
-     * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw-method-notify
-     */
-    function notify(
-        message: string | Message | JQuery | HTMLElement | HTMLElement[],
-        options?: Partial<Notification.Options>
-    ): JQuery.Promise<Notification>;
-
-    /**
      * A Notification object for 1 message.
      *
      * The constructor is not publicly accessible; use {@link mw.notification.notify} instead.

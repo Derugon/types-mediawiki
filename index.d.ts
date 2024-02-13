@@ -1,9 +1,9 @@
-/// <reference path="mediawiki/index.d.ts" />
-
 /// <reference types="./jquery" />
 /// <reference types="./jquery.client" />
 /// <reference types="./jquery.textSelection" />
+/// <reference types="./mediawiki" />
 /// <reference types="./mediawiki.api" />
+/// <reference types="./mediawiki.base" />
 /// <reference types="./mediawiki.cldr" />
 /// <reference types="./mediawiki.cookie" />
 /// <reference types="./mediawiki.experiments" />
