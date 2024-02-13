@@ -1,5 +1,3 @@
-/// <reference path="Api.params.d.ts" />
-
 declare namespace mw {
     /**
      * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api
