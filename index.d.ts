@@ -1,5 +1,6 @@
 import "./jquery";
 import "./jquery.client";
+import "./jquery.color";
 import "./jquery.textSelection";
 import "./mediawiki";
 import "./mediawiki.api";

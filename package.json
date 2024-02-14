@@ -14,6 +14,7 @@
     "files": [
         "jquery",
         "jquery.client",
+        "jquery.color",
         "jquery.textSelection",
         "mediawiki",
         "mediawiki.api",
