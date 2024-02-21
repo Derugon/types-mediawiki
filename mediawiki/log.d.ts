@@ -7,7 +7,7 @@ declare namespace mw {
      *
      * See {@link mw.log} for other logging methods.
      *
-     * @param {...Mixed} msg Messages to output to console.
+     * @param {...any} msg Messages to output to console.
      * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw-method-log
      */
     function log(...msg: any[]): void;
@@ -21,7 +21,7 @@ declare namespace mw {
         /**
          * Write a message to the browser console's warning channel.
          *
-         * @param {...Mixed} msg Messages to output to console
+         * @param {...any} msg Messages to output to console
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.log-method-warn
          */
         function warn(...msg: any[]): void;

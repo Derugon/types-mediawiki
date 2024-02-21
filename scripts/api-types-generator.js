@@ -15,7 +15,7 @@ const queryApiData = await new mw.Api().get({
     formatversion: "2",
 });
 
-function processParamInfo(type, name, prefix, multi) {
+function processParamInfo(type, prefix, name, multi) {
     if (Array.isArray(type)) {
         type = type.map((e) => `"${e}"`).join(" | ");
         if (multi) {
@@ -45,7 +45,7 @@ function processParamInfo(type, name, prefix, multi) {
     }
 
     name = prefix + name;
-    if (name.includes(`-`)) {
+    if (name.includes("-")) {
         name = `"${name}"`;
     }
     return { name, type };
@@ -67,8 +67,8 @@ function formatInterface(module) {
         ...module.parameters.map((param) => {
             const { name, type } = processParamInfo(
                 param.type,
-                param.name,
                 module.prefix,
+                param.name,
                 param.multi
             );
             return `\t${name}?: ${type};`;

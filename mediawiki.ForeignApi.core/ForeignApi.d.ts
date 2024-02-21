@@ -3,6 +3,11 @@ declare namespace mw {
      * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.ForeignApi
      */
     class ForeignApi extends Api {
+        static static: {};
+        static super: typeof Api;
+        /** @deprecated Use `super` instead */
+        static parent: typeof Api;
+
         /**
          * Create an object like {@link mw.Api}, but automatically handling everything required to communicate with another MediaWiki wiki via cross-origin requests (CORS).
          *
@@ -41,7 +46,7 @@ declare namespace mw {
          * @returns {string|undefined}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.ForeignApi-method-getOrigin
          */
-        protected getOrigin(): string | undefined;
+        protected getOrigin(): "*" | `${string}//${string}` | undefined;
     }
 
     namespace ForeignApi {

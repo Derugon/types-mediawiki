@@ -38,7 +38,7 @@ declare namespace mw {
      *
      * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw-property-config
      */
-    const config: Map<{
+    const config: Map.Extensible<{
         /**
          * Since MediaWiki 1.36+, 0 means debug mode is off, and a positive non-zero number means debug mode is on (e.g. 1 or 2).
          *
@@ -385,6 +385,5 @@ declare namespace mw {
          * @see https://www.mediawiki.org/wiki/Manual:Interface/JavaScript#wgDiffNewId
          */
         wgDiffNewId?: number;
-        [key: string]: unknown; // more config keys can be added by extensions
     }>;
 }

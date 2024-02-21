@@ -113,6 +113,17 @@ declare namespace mw {
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api-method-postWithToken
          */
         postWithToken(
+            tokenType: Api.TokenType,
+            params: Api.Params,
+            ajaxOptions?: JQuery.AjaxSettings
+        ): JQuery.Promise<Api.Response>;
+        /** @deprecated Use "csrf" instead */
+        postWithToken(
+            tokenType: Api.LegacyTokenType,
+            params: Api.Params,
+            ajaxOptions?: JQuery.AjaxSettings
+        ): JQuery.Promise<Api.Response>;
+        postWithToken(
             tokenType: string,
             params: Api.Params,
             ajaxOptions?: JQuery.AjaxSettings
@@ -123,11 +134,23 @@ declare namespace mw {
          *
          * @since 1.22
          * @param {string} type Token type
-         * @param {Api.Params|string} [additionalParams] Additional parameters for the API (since 1.35). When given a string, it's treated as the `assert` parameter (since 1.25)
+         * @param {Api.QueryTokensParams|Api.Assert} [additionalParams] Additional parameters for the API (since 1.35). When given a string, it's treated as the `assert` parameter (since 1.25)
          * @returns {JQuery.Promise<string>} Received token
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api-method-getToken
          */
-        getToken(type: string, additionalParams?: Api.Params | string): JQuery.Promise<string>;
+        getToken(
+            type: Api.TokenType,
+            additionalParams?: Api.QueryTokensParams | Api.Assert
+        ): JQuery.Promise<string>;
+        /** @deprecated Use "csrf" instead */
+        getToken(
+            type: Api.LegacyTokenType,
+            additionalParams?: Api.QueryTokensParams | Api.Assert
+        ): JQuery.Promise<string>;
+        getToken(
+            type: string,
+            additionalParams?: Api.QueryTokensParams | Api.Assert
+        ): JQuery.Promise<string>;
 
         /**
          * Indicate that the cached token for a certain action of the API is bad.
@@ -140,6 +163,9 @@ declare namespace mw {
          * @param {string} type Token type
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api-method-badToken
          */
+        badToken(type: Api.TokenType): void;
+        /** @deprecated Use "csrf" instead */
+        badToken(type: Api.LegacyTokenType): void;
         badToken(type: string): void;
 
         /**
@@ -217,14 +243,14 @@ declare namespace mw {
          * @param {TitleLike} title Page title
          * @param {Api.EditPageParams} params Edit API parameters
          * @param {string} content Page content
-         * @returns {JQuery.Promise<Api.Response>} API response
+         * @returns {JQuery.Promise<Api.EditResult>} API response
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.edit-method-create
          */
         create(
             title: TitleLike,
             params: Api.EditPageParams,
             content: string
-        ): JQuery.Promise<Api.Response>;
+        ): JQuery.Promise<Api.EditResult>;
 
         /**
          * Edit an existing page.
@@ -284,13 +310,13 @@ declare namespace mw {
          * @since 1.28
          * @param {TitleLike} title Page title
          * @param {function(Api.Revision):string|Api.EditPageParams} transform Callback that prepares the edit
-         * @returns {JQuery.Promise<any>}
+         * @returns {JQuery.Promise<Api.EditResult>}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.edit-method-edit
          */
         edit(
             title: TitleLike,
             transform: (revision: Api.Revision) => string | Api.EditPageParams
-        ): JQuery.Promise<any>;
+        ): JQuery.Promise<Api.EditResult>;
 
         /**
          * Post a new section to the page.
@@ -330,10 +356,12 @@ declare namespace mw {
          *
          * @since 1.27
          * @param {Api.Params} query Query parameters. The object will not be changed
-         * @returns {JQuery.Promise<Api.AssertUser>}
+         * @returns {Api.AssertUser}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.user-method-assertCurrentUser
          */
-        assertCurrentUser(query: Api.Params): JQuery.Promise<Api.AssertUser>;
+        assertCurrentUser<T extends Api.Params>(
+            query: T
+        ): Omit<T, keyof Api.AssertUser> & Api.AssertUser;
 
         /**
          * Asynchronously save the value of a single user option using the API. See `saveOptions()`.
@@ -368,24 +396,24 @@ declare namespace mw {
          * @since 1.35 - expiry parameter can be passed when Watchlist Expiry is enabled
          * @param {TypeOrUnionArray<TitleLike>} pages
          * @param {string} [expiry]
-         * @returns {JQuery.Promise<{ watch: TypeOrUnionArray<Api.WatchStatus> }>}
+         * @returns {JQuery.Promise<TypeOrUnionArray<Api.WatchStatus>>}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.watch-method-watch
          */
         watch<P extends TypeOrUnionArray<TitleLike>>(
             pages: P,
             expiry?: string
-        ): JQuery.Promise<{ watch: ReplaceValue<P, TitleLike, Api.WatchStatus> }>;
+        ): JQuery.Promise<ReplaceValue<P, TitleLike, Api.WatchStatus>>;
 
         /**
          * Convenience method for `action=watch&unwatch=1`.
          *
          * @param {TypeOrUnionArray<TitleLike>} pages
-         * @returns {JQuery.Promise<{ watch: TypeOrUnionArray<Api.WatchStatus> }>}
+         * @returns {JQuery.Promise<TypeOrUnionArray<Api.WatchStatus>>}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.watch-method-unwatch
          */
         unwatch<P extends TypeOrUnionArray<TitleLike>>(
             pages: P
-        ): JQuery.Promise<{ watch: ReplaceValue<P, TitleLike, Api.WatchStatus> }>;
+        ): JQuery.Promise<ReplaceValue<P, TitleLike, Api.WatchStatus>>;
 
         /**
          * Convenience method for `action=parse`.
@@ -404,26 +432,26 @@ declare namespace mw {
          * @since 1.27
          * @param {string|string[]} messages Messages to retrieve
          * @param {Api.QueryAllMessagesParams} [options] Additional parameters for the API call
-         * @returns {JQuery.Promise<Api.Response>}
+         * @returns {JQuery.Promise<Object.<string, string>>}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.messages-method-getMessages
          */
-        getMessages(
-            messages: string | string[],
+        getMessages<T extends string>(
+            messages: T | T[],
             options?: Api.QueryAllMessagesParams
-        ): JQuery.Promise<Api.Response>;
+        ): JQuery.Promise<Partial<Record<T, string>>>;
 
         /**
          * Load a set of messages and add them to `mw.messages`.
          *
          * @param {string|string[]} messages Messages to retrieve
          * @param {Api.QueryAllMessagesParams} [options] Additional parameters for the API call
-         * @returns {JQuery.Promise<Api.Response>}
+         * @returns {JQuery.Promise<boolean>}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.messages-method-loadMessages
          */
         loadMessages(
             messages: string | string[],
             options?: Api.QueryAllMessagesParams
-        ): JQuery.Promise<Api.Response>;
+        ): JQuery.Promise<boolean>;
 
         /**
          * Load a set of messages and add them to `mw.messages`. Only messages that are not already known are loaded. If all messages are known, the returned promise is resolved immediately.
@@ -431,13 +459,13 @@ declare namespace mw {
          * @since 1.27
          * @param {string[]} messages Messages to retrieve
          * @param {Api.QueryAllMessagesParams} [options] Additional parameters for the API call
-         * @returns {JQuery.Promise<Api.Response>}
+         * @returns {JQuery.Promise<boolean>}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.messages-method-loadMessagesIfMissing
          */
         loadMessagesIfMissing(
             messages: string[],
             options?: Api.QueryAllMessagesParams
-        ): JQuery.Promise<Api.Response>;
+        ): JQuery.Promise<boolean>;
 
         /**
          * Determine if a category exists.
@@ -475,14 +503,14 @@ declare namespace mw {
          * @param {TitleLike} page
          * @param {string} user
          * @param {Api.RollbackParams} [params] Additional parameters
-         * @returns {JQuery.Promise<Api.Response>}
+         * @returns {JQuery.Promise<Api.RollbackInfo>}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.rollback-method-rollback
          */
         rollback(
             page: TitleLike,
             user: string,
             params?: Api.RollbackParams
-        ): JQuery.Promise<Api.Response>;
+        ): JQuery.Promise<Api.RollbackInfo>;
 
         /**
          * Upload a file in several chunks.
@@ -589,6 +617,30 @@ declare namespace mw {
         type upload = File; // XXX
         type OneOrMore<T> = T | T[];
 
+        type Assert = "anon" | "bot" | "user";
+
+        type TokenType =
+            | "createaccount"
+            | "csrf"
+            | "deleteglobalaccount"
+            | "login"
+            | "patrol"
+            | "rollback"
+            | "setglobalaccountstatus"
+            | "userrights"
+            | "watch";
+
+        type LegacyTokenType =
+            | "block"
+            | "delete"
+            | "edit"
+            | "email"
+            | "import"
+            | "move"
+            | "options"
+            | "protect"
+            | "unblock";
+
         interface Params {
             action?: string;
             format?: "json" | "jsonfm" | "xml" | "xmlfm" | "php" | "none";
@@ -623,14 +675,57 @@ declare namespace mw {
             timestamp: string;
         }
 
+        type EditResult = EditFailureResult | EditNoChangeResult | EditChangedResult;
+
+        interface EditFailureResult {
+            result: "Failure";
+        }
+
+        interface EditSuccessResult {
+            contentmodel: string | false;
+            pageid: number;
+            result: "Success";
+            tempusercreated?: true;
+            tempusercreatedredirect?: string;
+            title: string;
+            watched?: true;
+            watchlistexpiry?: string;
+        }
+
+        interface EditNoChangeResult extends EditSuccessResult {
+            nochange: true;
+        }
+
+        interface EditChangedResult extends EditSuccessResult {
+            oldrevid: number;
+            newrevid: number;
+            newtimestamp: string;
+        }
+
         interface AssertUser {
             assert: "anon" | "user";
             assertUser: string;
         }
 
         interface WatchStatus {
+            ns: number;
             title: string;
             watched: boolean;
+        }
+
+        interface RollbackInfo {
+            /**
+             * The revision being restored (the last revision before revision(s) by the reverted user).
+             */
+            last_revid: number;
+            /**
+             * The revision being reverted (previously the current revision of the page).
+             */
+            old_revid: number;
+            pageid: number;
+            revid: number;
+            summary: string;
+            title: string;
         }
 
         interface FinishUpload {
