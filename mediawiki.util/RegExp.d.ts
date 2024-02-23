@@ -1,19 +1,21 @@
-/**
- * @see https://doc.wikimedia.org/mediawiki-core/REL1_29/js/source/mediawiki.RegExp.html
- */
-declare namespace mw.RegExp {
+declare namespace mw {
     /**
-     * Escape string for safe inclusion in regular expression
-     *
-     * The following characters are escaped:
-     *
-     *     \ { } ( ) | . ? * + - ^ $ [ ]
-     *
-     * @deprecated since 1.34
-     * @since 1.26
-     * @param {string} str String to escape
-     * @returns {string} Escaped string
-     * @see https://doc.wikimedia.org/mediawiki-core/REL1_29/js/source/mediawiki.RegExp.html#mw-RegExp-static-method-escape
+     * @see https://doc.wikimedia.org/mediawiki-core/REL1_29/js/source/mediawiki.RegExp.html
      */
-    function escape(str: string): string;
+    namespace RegExp {
+        /**
+         * Escape string for safe inclusion in regular expression
+         *
+         * The following characters are escaped:
+         *
+         *     \ { } ( ) | . ? * + - ^ $ [ ]
+         *
+         * @deprecated since 1.34
+         * @since 1.26
+         * @param {string} str String to escape
+         * @returns {string} Escaped string
+         * @see https://doc.wikimedia.org/mediawiki-core/REL1_29/js/source/mediawiki.RegExp.html#mw-RegExp-static-method-escape
+         */
+        function escape(str: string): string;
+    }
 }

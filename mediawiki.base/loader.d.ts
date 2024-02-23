@@ -1,15 +1,3 @@
-/**
- * Client for ResourceLoader server end point.
- *
- * This client is in charge of maintaining the module registry and state
- * machine, initiating network (batch) requests for loading modules, as
- * well as dependency resolution and execution of source code.
- *
- * For more information, refer to
- * <https://www.mediawiki.org/wiki/ResourceLoader/Features>
- *
- * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.loader
- */
 declare namespace mw.loader {
     /**
      * Get the names of all registered ResourceLoader modules.
