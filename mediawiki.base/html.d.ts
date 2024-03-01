@@ -2,6 +2,7 @@ declare namespace mw {
     /**
      * HTML construction helper functions
      *
+     * @example
      * ```js
      * var Html, output;
      *

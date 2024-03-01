@@ -45,7 +45,7 @@ declare namespace mw {
         abort(): void;
 
         /**
-         * Perform API get request.
+         * Perform API get request. See {@link ajax()} for details.
          *
          * @param {Api.Params} parameters
          * @param {JQuery.AjaxSettings} [ajaxOptions]
@@ -58,7 +58,7 @@ declare namespace mw {
         ): JQuery.Promise<Api.Response>;
 
         /**
-         * Perform API post request.
+         * Perform API post request. See {@link ajax()} for details.
          *
          * @param {Api.Params} parameters
          * @param {JQuery.AjaxSettings} [ajaxOptions]
@@ -82,9 +82,30 @@ declare namespace mw {
         /**
          * Perform the API call.
          *
-         * @param {Api.Params} parameters
-         * @param {JQuery.AjaxSettings} [ajaxOptions]
-         * @returns {JQuery.Promise<Api.Response>} API response data and the jqXHR object
+         * @param {UnknownApiParams} parameters Parameters to the API. See also {@link ApiOptions.parameters}
+         * @param {JQuery.AjaxSettings} [ajaxOptions] Parameters to pass to jQuery.ajax. See also {@link ApiOptions.ajax}
+         * @returns {JQuery.Promise<ApiResponse>} A promise that settles when the API response is processed.
+         *   Has an 'abort' method which can be used to abort the request.
+         *
+         *   - On success, resolves to `( result, jqXHR )` where `result` is the parsed API response.
+         *   - On an API error, rejects with `( code, result, result, jqXHR )` where `code` is the
+         *     [API error code](https://www.mediawiki.org/wiki/API:Errors_and_warnings), and `result`
+         *     is as above. When there are multiple errors, the code from the first one will be used.
+         *     If there is no error code, "unknown" is used.
+         *   - On other types of errors, rejects with `( 'http', details )` where `details` is an object
+         *     with three fields: `xhr` (the jqXHR object), `textStatus`, and `exception`.
+         *     The meaning of the last two fields is as follows:
+         *     - When the request is aborted (the abort method of the promise is called), textStatus
+         *       and exception are both set to "abort".
+         *     - On a network timeout, textStatus and exception are both set to "timeout".
+         *     - On a network error, textStatus is "error" and exception is the empty string.
+         *     - When the HTTP response code is anything other than 2xx or 304 (the API does not
+         *       use such response codes but some intermediate layer might), textStatus is "error"
+         *       and exception is the HTTP status text (the text following the status code in the
+         *       first line of the server response). For HTTP/2, `exception` is always an empty string.
+         *     - When the response is not valid JSON but the previous error conditions aren't met,
+         *       textStatus is "parsererror" and exception is the exception object thrown by
+         *       `JSON.parse`.
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api-method-ajax
          */
         ajax(
@@ -93,9 +114,9 @@ declare namespace mw {
         ): JQuery.Promise<Api.Response>;
 
         /**
-         * Post to API with specified type of token. If we have no token, get one and try to post.
-         * If we have a cached token try using that, and if it fails, blank out the
-         * cached token and start over. For example to change an user option you could do:
+         * Post to API with the specified type of token. If we have no token, get one and try to post.
+         * If we already have a cached token, try using that, and if the request fails using the cached token,
+         * blank it out and start over. For example, to change a user option, you could do:
          *
          * ```js
          * new mw.Api().postWithToken( 'csrf', {
@@ -106,10 +127,10 @@ declare namespace mw {
          * ```
          *
          * @since 1.22
-         * @param {string} tokenType The name of the token, like `options` or `edit`
+         * @param {string} tokenType The name of the token, like `options` or `edit`.
          * @param {Api.Params} params API parameters
          * @param {JQuery.AjaxSettings} [ajaxOptions]
-         * @returns {JQuery.Promise<Api.Response>}
+         * @returns {JQuery.Promise<Api.Response>} See {@link post}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api-method-postWithToken
          */
         postWithToken(
@@ -210,7 +231,7 @@ declare namespace mw {
          * Post to API with csrf token. If we have no token, get one and try to post. If we have a cached token try using that, and if it fails, blank out the cached token and start over.
          *
          * @param {APIParams} params API parameters
-         * @param {JQuery.AjaxSettings} [ajaxOptions]
+         * @param {JQuery.AjaxSettings} [ajaxOptions] See {@link post}
          * @returns {JQuery.Promise<Api.Response>}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.edit-method-postWithEditToken
          */
@@ -310,7 +331,7 @@ declare namespace mw {
          * @since 1.28
          * @param {TitleLike} title Page title
          * @param {function(Api.Revision):string|Api.EditPageParams} transform Callback that prepares the edit
-         * @returns {JQuery.Promise<Api.EditResult>}
+         * @returns {JQuery.Promise<Api.EditResult>} Edit API response
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.edit-method-edit
          */
         edit(
@@ -374,7 +395,7 @@ declare namespace mw {
         saveOption(name: string, value: string | null): JQuery.Promise<Api.Response>;
 
         /**
-         * Asynchronously save the values of user options using the API.
+         * Asynchronously save the values of user options using the [Options API](https://www.mediawiki.org/wiki/API:Options).
          *
          * If a value of `null` is provided, the given option will be reset to the default value.
          *
@@ -602,7 +623,7 @@ declare namespace mw {
         /**
          * @param {string} username
          * @param {string} password
-         * @returns {JQuery.Promise<Api.Response>}
+         * @returns {JQuery.Promise<Api.Response>} See {@link post()}
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api.plugin.login-method-login
          */
         login(username: string, password: string): JQuery.Promise<Api.Response>;
@@ -731,6 +752,9 @@ declare namespace mw {
         interface FinishUpload {
             /**
              * Call this function to finish the upload.
+             *
+             * @param {ApiUploadParams} data Additional data for the upload.
+             * @returns {JQuery.Promise<ApiResponse>} API promise for the final upload.
              */
             (data?: UploadParams): JQuery.Promise<Response>;
         }

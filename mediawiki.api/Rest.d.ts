@@ -113,7 +113,7 @@ declare namespace mw {
          *
          * @param {string} path
          * @param {JQuery.AjaxSettings} [ajaxOptions]
-         * @returns {JQuery.Promise<Rest.Response>} API response data and the jqXHR object
+         * @returns {JQuery.Promise<Rest.Response>} Done: API response data and the jqXHR object.
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Api-method-ajax
          */
         ajax(path: string, ajaxOptions?: JQuery.AjaxSettings): JQuery.Promise<Rest.Response>;
