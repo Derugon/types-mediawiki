@@ -1,3 +1,3 @@
-import "jquery";
+/// <reference types="jquery" />
 
-import "./collapsibleTabs";
+/// <reference path="collapsibleTabs.d.ts" />
