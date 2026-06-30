@@ -43,6 +43,14 @@ declare global {
             blockExpiryPreset?: string;
             blockHideUser?: true;
             blockId?: number | null;
+            /**
+             * @since 1.47
+             */
+            blockIndefiniteExpiry?: string;
+            /**
+             * @since 1.47
+             */
+            blockIndefiniteExpiryLabel?: string;
             blockNamespaceRestrictions?: string;
             blockPageRestrictions?: string;
             blockPreErrors?: string[];
