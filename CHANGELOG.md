@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 2.1.0
+
 -   Updated to MediaWiki 1.45:
     -   Added `notice` as valid type for `mw.notify()` options.
     -   Added `blockCIDRLimit`, `wgParsoidHtmlVersion` configuration values.
