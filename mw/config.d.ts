@@ -435,6 +435,10 @@ declare global {
             wgStructuredChangeFiltersDefaultSavedQueryExists?: true;
             wgStructuredChangeFiltersLimitPreferenceName?: string;
             wgStructuredChangeFiltersMessages?: Record<string, string>;
+            /**
+             * @since 1.47
+             */
+            wgStructuredChangeFiltersRestrictedTags?: StructuredChangeFiltersRestrictedTag[];
             wgStructuredChangeFiltersSavedQueriesPreferenceName?: string;
             wgTempUserName?: string | null;
             /**
@@ -684,6 +688,14 @@ interface StructuredChangeFilter {
 interface StructuredChangeFilterSubset {
     filter: string;
     group: string;
+}
+
+interface StructuredChangeFiltersRestrictedTag {
+    cssClass: string;
+    description: string;
+    helpLink: string | null;
+    label: string;
+    name: string;
 }
 
 interface StructuredChangeFiltersDisplayConfig {
