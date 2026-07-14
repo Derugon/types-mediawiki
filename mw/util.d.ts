@@ -12,7 +12,7 @@ type NoReturn<T extends (...args: any[]) => any> = T extends (
 /**
  * @see https://doc.wikimedia.org/mediawiki-core/master/js/module-mediawiki.util.html#~PortletOptions
  */
-interface PortletOptions {
+export interface PortletOptions {
     /**
      * Access key to activate this link. One character only, avoid conflicts with other links.
      * Use `$( '[accesskey=x]' )` in the console to see if 'x' is already used.
@@ -22,6 +22,10 @@ interface PortletOptions {
      * Link URL.
      */
     href: string;
+    /**
+     * Name of the Codex icon name this menu should use if skin supports this.
+     */
+    icon?: string;
     /**
      * ID of the list item, should be unique and preferably have the appropriate prefix
      * ('ca-', 'pt-', 'n-' or 't-').

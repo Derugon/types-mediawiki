@@ -16,6 +16,9 @@ declare global {
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.tempUserCreated.html
          */
         namespace tempUserCreated {
+            /**
+             * @since 1.47
+             */
             function showCondensedPopup(props: UserCreatedPopoverProps): void;
 
             /**

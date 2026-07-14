@@ -1,5 +1,6 @@
 import { ApiBlockParams } from "types-mediawiki-api";
 import { User } from "./user";
+import { PortletOptions } from "./util";
 
 /**
  * An instance of a hook, created via {@link mw.hook mw.hook method}.
@@ -248,17 +249,19 @@ declare global {
          *
          * @example
          * ```js
-         * mw.hook( 'util.addPortletLink' ).add( ( link ) => {
-         *     const span = $( '<span class="icon">' );
-         *     link.appendChild( span );
+         * mw.hook( 'util.addPortletLink' ).add( ( link, options ) => {
+         *     if ( options.id === 't-special-link' ) {
+         *         link.classList.add( 'my-special-class' );
+         *     }
          * } );
          * ```
+         * @since 1.47 - all portlet options are passed.
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/Hooks.html#~event:'util.addPortletLink'
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.html#.hook
          */
         function hook(
             name: "util.addPortletLink"
-        ): Hook<[item: HTMLLIElement, information: object]>;
+        ): Hook<[item: HTMLLIElement, options: PortletOptions]>;
 
         /**
          * Create an instance of {@link Hook}, fired when categories are being added to the DOM.
