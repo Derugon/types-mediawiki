@@ -101,6 +101,9 @@ declare global {
              * @since 1.46
              */
             SpecialWatchlistLabelsUrl?: string;
+            /**
+             * @deprecated Removed since 1.47.
+             */
             specUrl?: string | null;
             StructuredChangeFiltersDisplayConfig?: StructuredChangeFiltersDisplayConfig;
             /**
@@ -182,9 +185,18 @@ declare global {
             wgContentNamespaces: number[];
             wgCreateAccountDirty?: true;
             /**
+             * @since 1.47
+             */
+            wgCreateAccountUsernamePolicyBulletsHtml?: string[];
+            /**
              * @since 1.46
+             * @deprecated Removed since 1.47.
              */
             wgCreateAccountUsernamePolicyPopoverMsgs?: PopoverMessages;
+            /**
+             * @since 1.47
+             */
+            wgCreateAccountUsernamePolicyUrl?: string;
             /**
              * The top revision ID of the currently viewed page at the time the page was served. Also set on diff and history pages; zero for special pages.
              *

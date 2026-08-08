@@ -1,6 +1,6 @@
 import { ApiBlockParams } from "types-mediawiki-api";
 import { User } from "./user";
-import { PortletOptions } from "./util";
+import { PortletLinkOptions } from "./util";
 
 /**
  * An instance of a hook, created via {@link mw.hook mw.hook method}.
@@ -261,7 +261,7 @@ declare global {
          */
         function hook(
             name: "util.addPortletLink"
-        ): Hook<[item: HTMLLIElement, options: PortletOptions]>;
+        ): Hook<[item: HTMLLIElement, options: PortletLinkOptions]>;
 
         /**
          * Create an instance of {@link Hook}, fired when categories are being added to the DOM.
