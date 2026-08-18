@@ -57,6 +57,8 @@ export interface PortletLinkOptions {
     href: string;
     /**
      * Name of the Codex icon name this menu should use if skin supports this.
+     *
+     * @since 1.47
      */
     icon?: string;
     /**
@@ -268,11 +270,15 @@ declare global {
              * ```
              *
              * @since 1.47 - a {@link PortletLinkOptions} object can passed as argument.
+             * @param portletId ID of the target portlet (e.g. 'p-cactions' or 'p-personal').
              * @param options Portlet options.
              * @returns The added list item, or null if no element was added.
              * @see https://doc.wikimedia.org/mediawiki-core/master/js/module-mediawiki.util.html#.addPortletLink
              */
-            function addPortletLink(options: PortletLinkOptions): HTMLLIElement | null;
+            function addPortletLink(
+                portletId: string,
+                options: PortletLinkOptions
+            ): HTMLLIElement | null;
             /**
              * Add a link to a portlet menu on the page.
              *
