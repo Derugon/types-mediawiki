@@ -92,6 +92,14 @@ declare global {
             getBasename(path: string): string;
 
             /**
+             * Get the chunk size used for chunked uploads, in bytes.
+             *
+             * @since 1.47
+             * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.html#getChunkSize
+             */
+            getChunkSize(): boolean;
+
+            /**
              * Get the current value of the edit comment for the upload.
              *
              * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.html#getComment
@@ -119,6 +127,14 @@ declare global {
              * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.html#getFilename
              */
             getFilename(): string;
+
+            /**
+             * Check if upload warnings will be ignored when publishing.
+             *
+             * @since 1.47
+             * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.html#getIgnoreWarnings
+             */
+            getIgnoreWarnings(): boolean;
 
             /**
              * Get the imageinfo object for the finished upload.
@@ -183,6 +199,14 @@ declare global {
             setAutoText(autotext: boolean): void;
 
             /**
+             * Set the chunk size used for chunked uploads, in bytes.
+             *
+             * @since 1.47
+             * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.html#setChunkSize
+             */
+            setChunkSize(chunkSize: number): void;
+
+            /**
              * Set the edit comment for the upload.
              *
              * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.html#setComment
@@ -224,6 +248,14 @@ declare global {
              * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.html#setFilenameFromFile
              */
             setFilenameFromFile(): void;
+
+            /**
+             * Set whether to ignore upload warnings when publishing.
+             *
+             * @since 1.47
+             * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.html#setIgnoreWarnings
+             */
+            setIgnoreWarnings(ignoreWarnings: boolean): void;
 
             /**
              * Set the license template for the upload.

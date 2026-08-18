@@ -232,6 +232,10 @@ declare global {
             wgEditRecoveryWasPosted?: boolean;
             wgEditSubmitButtonLabelPublish?: boolean;
             /**
+             * @since 1.47
+             */
+            wgEnableChunkedUploads?: boolean;
+            /**
              * @since 1.46
              */
             wgErrorPageMessageKey?: string;
@@ -281,7 +285,15 @@ declare global {
              */
             wgIsRedirect: boolean;
             wgLegalTitleChars: string;
+            /**
+             * @since 1.47
+             */
+            wgMaxPhpUploadSize?: number;
             wgMaxUploadSize?: MaxUploadSize;
+            /**
+             * @since 1.47
+             */
+            wgMinUploadChunkSize?: number;
             wgMonthNames: [
                 string,
                 string,
