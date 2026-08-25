@@ -174,10 +174,14 @@ declare global {
              *
              * @example
              * ```js
-             * // Create a portlet with 2 menu items that is styled as a dropdown in certain skins.
-             * mw.util.addPortlet( 'p-myportlet', 'My label', '#p-cactions' );
-             * mw.util.addPortletLink( 'p-myportlet', '#', 'Link 1' );
-             * mw.util.addPortletLink( 'p-myportlet', '#', 'Link 2' );
+             * // Create a portlet with 2 menu items that uses a <div> label
+             * // and is styled as a dropdown in certain skins.
+             * mw.util.addPortlet( 'p-myportlet', {
+             *     label: 'My label',
+             *     selectorHint: '#p-cactions'
+             * } );
+             * mw.util.addPortletLink( 'p-myportlet', { href: '#', text: 'Link 1' } );
+             * mw.util.addPortletLink( 'p-myportlet', { href: '#', text: 'Link 2' } );
              * ```
              * @since 1.41
              * @since 1.47 - a {@link PortletOptions} object can passed as argument.
@@ -194,10 +198,14 @@ declare global {
              *
              * @example
              * ```js
-             * // Create a portlet with 2 menu items that is styled as a dropdown in certain skins.
-             * mw.util.addPortlet( 'p-myportlet', 'My label', '#p-cactions' );
-             * mw.util.addPortletLink( 'p-myportlet', '#', 'Link 1' );
-             * mw.util.addPortletLink( 'p-myportlet', '#', 'Link 2' );
+             * // Create a portlet with 2 menu items that uses a <div> label
+             * // and is styled as a dropdown in certain skins.
+             * mw.util.addPortlet( 'p-myportlet', {
+             *     label: 'My label',
+             *     selectorHint: '#p-cactions'
+             * } );
+             * mw.util.addPortletLink( 'p-myportlet', { href: '#', text: 'Link 1' } );
+             * mw.util.addPortletLink( 'p-myportlet', { href: '#', text: 'Link 2' } );
              * ```
              * @since 1.41
              * @deprecated since 1.47 - pass a {@link PortletOptions} object as argument.
@@ -244,16 +252,19 @@ declare global {
              * for that item, e.g. `'#foobar'` or `document.getElementById( 'foobar' )`.
              *
              * ```js
-             * mw.util.addPortletLink(
-             *     'p-tb', 'https://www.mediawiki.org/',
-             *     'mediawiki.org', 't-mworg', 'Go to mediawiki.org', 'm', '#t-print'
-             * );
+             * mw.util.addPortletLink( 'p-tb', {
+             *     href: 'https://www.mediawiki.org/',
+             *     text: 'mediawiki.org',
+             *     id: 't-mworg',
+             *     tooltip: 'Go to mediawiki.org',
+             *     accesskey: 'm',
+             *     nextnode: '#t-print'
+             * } );
              *
-             * var node = mw.util.addPortletLink(
-             *     'p-tb',
-             *     mw.util.getUrl( 'Special:Example' ),
-             *     'Example'
-             * );
+             * var node = mw.util.addPortletLink( 'p-tb', {
+             *     href: mw.util.getUrl( 'Special:Example' ),
+             *     text: 'Example'
+             * } );
              * $( node ).on( 'click', function ( e ) {
              *     console.log( 'Example' );
              *     e.preventDefault();
@@ -265,7 +276,10 @@ declare global {
              *
              * ```js
              * $.when( mw.loader.using( [ 'mediawiki.util' ] ), $.ready ).then( function () {
-             *     mw.util.addPortletLink( 'p-tb', 'https://www.mediawiki.org/', 'mediawiki.org' );
+             *     mw.util.addPortletLink( 'p-tb', {
+             *         href: 'https://www.mediawiki.org/',
+             *         text: 'mediawiki.org'
+             *     } );
              * } );
              * ```
              *
@@ -308,16 +322,19 @@ declare global {
              * or `document.getElementById( 'foobar' )`.
              *
              * ```js
-             * mw.util.addPortletLink(
-             *     'p-tb', 'https://www.mediawiki.org/',
-             *     'mediawiki.org', 't-mworg', 'Go to mediawiki.org', 'm', '#t-print'
-             * );
+             * mw.util.addPortletLink( 'p-tb', {
+             *     href: 'https://www.mediawiki.org/',
+             *     text: 'mediawiki.org',
+             *     id: 't-mworg',
+             *     tooltip: 'Go to mediawiki.org',
+             *     accesskey: 'm',
+             *     nextnode: '#t-print'
+             * } );
              *
-             * var node = mw.util.addPortletLink(
-             *     'p-tb',
-             *     mw.util.getUrl( 'Special:Example' ),
-             *     'Example'
-             * );
+             * var node = mw.util.addPortletLink( 'p-tb', {
+             *     href: mw.util.getUrl( 'Special:Example' ),
+             *     text: 'Example'
+             * } );
              * $( node ).on( 'click', function ( e ) {
              *     console.log( 'Example' );
              *     e.preventDefault();
@@ -329,7 +346,10 @@ declare global {
              *
              * ```js
              * $.when( mw.loader.using( [ 'mediawiki.util' ] ), $.ready ).then( function () {
-             *     mw.util.addPortletLink( 'p-tb', 'https://www.mediawiki.org/', 'mediawiki.org' );
+             *     mw.util.addPortletLink( 'p-tb', {
+             *         href: 'https://www.mediawiki.org/',
+             *         text: 'mediawiki.org'
+             *     } );
              * } );
              * ```
              *
