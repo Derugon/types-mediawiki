@@ -364,6 +364,14 @@ declare global {
             wgPostEditConfirmationDisabled?: true;
             wgPreferencesTabs?: PreferenceTab[];
             /**
+             * @since 1.47
+             */
+            wgReauthCurrentlyRequired?: boolean;
+            /**
+             * @since 1.47
+             */
+            wgReauthOperation?: string;
+            /**
              * When redirected contains the title of the page we were redirected from. If the page was not redirected, the value is omitted entirely (absent in mw.config). Uses the same format as wgPageName
              *
              * @see https://www.mediawiki.org/wiki/Special:MyLanguage/Manual:Interface/JavaScript#wgRedirectedFrom
