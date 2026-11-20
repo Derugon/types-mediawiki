@@ -277,18 +277,24 @@ declare global {
                     /**
                      * The form rendered in the second step to get metadata.
                      * Rendered in {@link BookletLayout.renderInfoForm renderInfoForm}.
+                     *
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#infoForm
                      */
                     infoForm: OO.ui.FormLayout;
 
                     /**
                      * The form rendered in the third step to show usage.
                      * Rendered in {@link BookletLayout.renderInsertForm renderInsertForm}.
+                     *
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#insertForm
                      */
                     insertForm: OO.ui.FormLayout;
 
                     /**
                      * The form rendered in the first step to get the file object.
                      * Rendered in {@link BookletLayout.renderUploadForm renderUploadForm}.
+                     *
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#uploadForm
                      */
                     uploadForm: OO.ui.FormLayout;
                 }
@@ -298,11 +304,14 @@ declare global {
                      * Initialize for a new upload.
                      *
                      * @returns Promise resolved when everything is initialized.
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#initialize
                      */
                     initialize(): JQuery.Promise<void>;
 
                     /**
                      * Gets the widget for displaying or inputting the file to upload.
+                     *
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#getFileWidget
                      */
                     getFileWidget(): OO.ui.SelectFileInputWidget | mw.widgets.StashedFileWidget;
 
@@ -310,6 +319,7 @@ declare global {
                      * Clear the values of all fields.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#clear
                      */
                     clear(): void;
 
@@ -318,6 +328,7 @@ declare global {
                      *
                      * @protected
                      * @returns Upload model.
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#createUpload
                      */
                     createUpload(): Upload;
 
@@ -327,6 +338,7 @@ declare global {
                      *
                      * @protected
                      * @returns A Promise that will be resolved with an {@link OO.ui.Error}.
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#getErrorMessageForStateDetails
                      */
                     getErrorMessageForStateDetails(): JQuery.Promise<OO.ui.Error> | undefined;
 
@@ -335,6 +347,7 @@ declare global {
                      * {@link BookletLayout.Props.uploadForm upload form}.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#getFile
                      */
                     getFile(): File | null;
 
@@ -343,6 +356,7 @@ declare global {
                      * {@link BookletLayout.Props.infoForm information form}.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#getFilename
                      */
                     getFilename(): string;
 
@@ -351,6 +365,7 @@ declare global {
                      * {@link BookletLayout.Props.infoForm information form}.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#getText
                      */
                     getText(): string;
 
@@ -358,6 +373,7 @@ declare global {
                      * Handle change events to the info form.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#onInfoFormChange
                      */
                     onInfoFormChange(): void;
 
@@ -365,6 +381,7 @@ declare global {
                      * Handle change events to the upload form.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#onUploadFormChange
                      */
                     onUploadFormChange(): void;
 
@@ -373,6 +390,7 @@ declare global {
                      * {@link BookletLayout.Props.infoForm infoForm} property.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#renderInfoForm
                      */
                     renderInfoForm(): OO.ui.FormLayout;
 
@@ -381,6 +399,7 @@ declare global {
                      * {@link BookletLayout.Props.insertForm insertForm} property.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#renderInsertForm
                      */
                     renderInsertForm(): OO.ui.FormLayout;
 
@@ -389,6 +408,7 @@ declare global {
                      * {@link BookletLayout.Props.uploadForm uploadForm} property.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#renderUploadForm
                      */
                     renderUploadForm(): OO.ui.FormLayout;
 
@@ -399,6 +419,7 @@ declare global {
                      * @protected
                      * @returns Rejects the promise with an {@link OO.ui.Error error}, or resolves
                      *  if the upload was successful.
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#saveFile
                      */
                     saveFile(): JQuery.Promise<void, OO.ui.Error>;
 
@@ -407,6 +428,7 @@ declare global {
                      *
                      * @protected
                      * @param file File to select.
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#setFile
                      */
                     setFile(file: File | null): void;
 
@@ -415,6 +437,7 @@ declare global {
                      * this upload operation.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#setFilekey
                      */
                     setFilekey(filekey: string): void;
 
@@ -423,6 +446,7 @@ declare global {
                      * given filename.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#setFilename
                      */
                     setFilename(filename: string): void;
 
@@ -430,6 +454,7 @@ declare global {
                      * Updates the file preview on the info form when a file is added.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#updateFilePreview
                      */
                     updateFilePreview(): void;
 
@@ -438,6 +463,7 @@ declare global {
                      * get the HTML5 file object.
                      *
                      * @protected
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#uploadFile
                      */
                     uploadFile(): JQuery.Promise<void, OO.ui.Error>;
 
@@ -506,6 +532,7 @@ declare global {
                      * Create an instance of {@link mw.Upload.BookletLayout}.
                      *
                      * @param config Configuration options.
+                     * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#BookletLayout
                      */
                     new (config?: ConfigOptions): mw.Upload.BookletLayout;
                     prototype: Prototype;
@@ -563,6 +590,8 @@ declare global {
              * return the new model. The {@link #saveFile saveFile}, and
              * the {@link mw.Upload.BookletLayout#uploadFile uploadFile} methods need to be
              * overridden to use the new model and data returned from the forms.
+             *
+             * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html
              */
             interface BookletLayout extends BookletLayout.Props, BookletLayout.Prototype {}
             const BookletLayout: BookletLayout.Constructor;

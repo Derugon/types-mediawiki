@@ -34,6 +34,8 @@ declare global {
                     OO.ui.mixin.PendingElement.Prototype {
                 /**
                  * Get the current filekey.
+                 *
+                 * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.widgets.StashedFileWidget.html#getValue
                  */
                 getValue(): string | null;
 
@@ -44,6 +46,8 @@ declare global {
 
                 /**
                  * Set the filekey.
+                 *
+                 * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.widgets.StashedFileWidget.html#setValue
                  */
                 setValue(filekey: string | null): void;
 
@@ -53,6 +57,7 @@ declare global {
             interface Constructor {
                 /**
                  * @param config Configuration options.
+                 * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.widgets.StashedFileWidget.html#StashedFileWidget
                  */
                 new (config?: ConfigOptions): StashedFileWidget;
                 prototype: Prototype;
@@ -81,6 +86,7 @@ declare global {
          * widget.setValue( '12r9epfbnskk.knfiy7.1.jpg' );
          * widget.getValue(); // '12r9epfbnskk.knfiy7.1.jpg'
          * ```
+         * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.widgets.StashedFileWidget.html
          */
         interface StashedFileWidget extends StashedFileWidget.Props, StashedFileWidget.Prototype {}
         const StashedFileWidget: StashedFileWidget.Constructor;
