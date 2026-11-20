@@ -259,13 +259,19 @@ declare global {
                     /**
                      * Sets the stashed file to finish uploading. Overrides most of the file
                      * selection process, and fetches a thumbnail from the server.
+                     *
+                     * @since 1.27
                      */
                     filekey?: string;
                 }
 
                 interface EventMap {
                     fileSaved: [imageInfo: ApiResponse];
-                    fileUploadProgress: [progress: number];
+                    /**
+                     * @since 1.27
+                     * @since 1.45 - estimatedRemainingTime argument is no longer passed.
+                     */
+                    fileUploadProgress: [progress: number, estimatedRemainingTime: number];
                     fileUploaded: [];
                     infoValid: [isValid: boolean];
                     uploadValid: [isValid: boolean];
@@ -303,6 +309,7 @@ declare global {
                     /**
                      * Initialize for a new upload.
                      *
+                     * @since 1.27 - returns a promise.
                      * @returns Promise resolved when everything is initialized.
                      * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#initialize
                      */
@@ -311,6 +318,10 @@ declare global {
                     /**
                      * Gets the widget for displaying or inputting the file to upload.
                      *
+                     * @since 1.27
+                     * @since 1.42 - returns a
+                     *  {@link OO.ui.SelectFileInputWidget SelectFileInputWidget} instead of a
+                     *  {@link OO.ui.SelectFileWidget SelectFileWidget}.
                      * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#getFileWidget
                      */
                     getFileWidget(): OO.ui.SelectFileInputWidget | mw.widgets.StashedFileWidget;
@@ -337,6 +348,7 @@ declare global {
                      * to the user for current state and state details.
                      *
                      * @protected
+                     * @since 1.28 - returns a promise instead the error object.
                      * @returns A Promise that will be resolved with an {@link OO.ui.Error}.
                      * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#getErrorMessageForStateDetails
                      */
@@ -437,6 +449,7 @@ declare global {
                      * this upload operation.
                      *
                      * @protected
+                     * @since 1.27
                      * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#setFilekey
                      */
                     setFilekey(filekey: string): void;
@@ -446,6 +459,7 @@ declare global {
                      * given filename.
                      *
                      * @protected
+                     * @since 1.27
                      * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#setFilename
                      */
                     setFilename(filename: string): void;
@@ -454,6 +468,7 @@ declare global {
                      * Updates the file preview on the info form when a file is added.
                      *
                      * @protected
+                     * @since 1.27
                      * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html#updateFilePreview
                      */
                     updateFilePreview(): void;
@@ -591,6 +606,7 @@ declare global {
              * the {@link mw.Upload.BookletLayout#uploadFile uploadFile} methods need to be
              * overridden to use the new model and data returned from the forms.
              *
+             * @since 1.26
              * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.Upload.BookletLayout.html
              */
             interface BookletLayout extends BookletLayout.Props, BookletLayout.Prototype {}

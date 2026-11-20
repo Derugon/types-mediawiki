@@ -86,6 +86,7 @@ declare global {
          * widget.setValue( '12r9epfbnskk.knfiy7.1.jpg' );
          * widget.getValue(); // '12r9epfbnskk.knfiy7.1.jpg'
          * ```
+         * @since 1.27
          * @see https://doc.wikimedia.org/mediawiki-core/master/js/mw.widgets.StashedFileWidget.html
          */
         interface StashedFileWidget extends StashedFileWidget.Props, StashedFileWidget.Prototype {}
