@@ -33,6 +33,7 @@ import "./Upload";
 import "./Uri";
 import "./user";
 import "./util";
+import "./widgets";
 
 interface IdleCallbackOptions {
     /**
