@@ -249,6 +249,323 @@ declare global {
                  */
                 UPLOADED,
             }
+
+            namespace BookletLayout {
+                interface ConfigOptions extends OO.ui.BookletLayout.ConfigOptions {
+                    /**
+                     * Overlay to use for widgets in the booklet.
+                     */
+                    $overlay?: JQuery;
+                    /**
+                     * Sets the stashed file to finish uploading. Overrides most of the file
+                     * selection process, and fetches a thumbnail from the server.
+                     */
+                    filekey?: string;
+                }
+
+                interface EventMap {
+                    fileSaved: [imageInfo: ApiResponse];
+                    fileUploadProgress: [progress: number];
+                    fileUploaded: [];
+                    infoValid: [isValid: boolean];
+                    uploadValid: [isValid: boolean];
+                }
+
+                type Static = OO.ui.BookletLayout.Static;
+
+                interface Props extends OO.ui.BookletLayout.Props {
+                    /**
+                     * The form rendered in the second step to get metadata.
+                     * Rendered in {@link BookletLayout.renderInfoForm renderInfoForm}.
+                     */
+                    infoForm: OO.ui.FormLayout;
+
+                    /**
+                     * The form rendered in the third step to show usage.
+                     * Rendered in {@link BookletLayout.renderInsertForm renderInsertForm}.
+                     */
+                    insertForm: OO.ui.FormLayout;
+
+                    /**
+                     * The form rendered in the first step to get the file object.
+                     * Rendered in {@link BookletLayout.renderUploadForm renderUploadForm}.
+                     */
+                    uploadForm: OO.ui.FormLayout;
+                }
+
+                interface Prototype extends OO.ui.BookletLayout.Prototype {
+                    /**
+                     * Initialize for a new upload.
+                     *
+                     * @returns Promise resolved when everything is initialized.
+                     */
+                    initialize(): JQuery.Promise<void>;
+
+                    /**
+                     * Gets the widget for displaying or inputting the file to upload.
+                     */
+                    getFileWidget(): OO.ui.SelectFileInputWidget | mw.widgets.StashedFileWidget;
+
+                    /**
+                     * Clear the values of all fields.
+                     *
+                     * @protected
+                     */
+                    clear(): void;
+
+                    /**
+                     * Create a new upload model.
+                     *
+                     * @protected
+                     * @returns Upload model.
+                     */
+                    createUpload(): Upload;
+
+                    /**
+                     * Get an error message (as {@link OO.ui.Error} object) that should be displayed
+                     * to the user for current state and state details.
+                     *
+                     * @protected
+                     * @returns A Promise that will be resolved with an {@link OO.ui.Error}.
+                     */
+                    getErrorMessageForStateDetails(): JQuery.Promise<OO.ui.Error> | undefined;
+
+                    /**
+                     * Gets the file object from the
+                     * {@link BookletLayout.Props.uploadForm upload form}.
+                     *
+                     * @protected
+                     */
+                    getFile(): File | null;
+
+                    /**
+                     * Gets the file name from the
+                     * {@link BookletLayout.Props.infoForm information form}.
+                     *
+                     * @protected
+                     */
+                    getFilename(): string;
+
+                    /**
+                     * Gets the page text from the
+                     * {@link BookletLayout.Props.infoForm information form}.
+                     *
+                     * @protected
+                     */
+                    getText(): string;
+
+                    /**
+                     * Handle change events to the info form.
+                     *
+                     * @protected
+                     */
+                    onInfoFormChange(): void;
+
+                    /**
+                     * Handle change events to the upload form.
+                     *
+                     * @protected
+                     */
+                    onUploadFormChange(): void;
+
+                    /**
+                     * Renders and returns the information form for collecting metadata and sets the
+                     * {@link BookletLayout.Props.infoForm infoForm} property.
+                     *
+                     * @protected
+                     */
+                    renderInfoForm(): OO.ui.FormLayout;
+
+                    /**
+                     * Renders and returns the insert form to show file usage and sets the
+                     * {@link BookletLayout.Props.insertForm insertForm} property.
+                     *
+                     * @protected
+                     */
+                    renderInsertForm(): OO.ui.FormLayout;
+
+                    /**
+                     * Renders and returns the upload form and sets the
+                     * {@link BookletLayout.Props.uploadForm uploadForm} property.
+                     *
+                     * @protected
+                     */
+                    renderUploadForm(): OO.ui.FormLayout;
+
+                    /**
+                     * Saves the stash finalizes upload. Uses {@link getFilename}, and
+                     * {@link getText} to get details from the form.
+                     *
+                     * @protected
+                     * @returns Rejects the promise with an {@link OO.ui.Error error}, or resolves
+                     *  if the upload was successful.
+                     */
+                    saveFile(): JQuery.Promise<void, OO.ui.Error>;
+
+                    /**
+                     * Sets the file object.
+                     *
+                     * @protected
+                     * @param file File to select.
+                     */
+                    setFile(file: File | null): void;
+
+                    /**
+                     * Sets the filekey of a file already stashed on the server as the target of
+                     * this upload operation.
+                     *
+                     * @protected
+                     */
+                    setFilekey(filekey: string): void;
+
+                    /**
+                     * Prefills the {@link BookletLayout.Props.infoForm information form} with the
+                     * given filename.
+                     *
+                     * @protected
+                     */
+                    setFilename(filename: string): void;
+
+                    /**
+                     * Updates the file preview on the info form when a file is added.
+                     *
+                     * @protected
+                     */
+                    updateFilePreview(): void;
+
+                    /**
+                     * Uploads the file that was added in the upload form. Uses {@link getFile} to
+                     * get the HTML5 file object.
+                     *
+                     * @protected
+                     */
+                    uploadFile(): JQuery.Promise<void, OO.ui.Error>;
+
+                    // #region EventEmitter overloads
+                    on<K extends keyof EventMap, A extends OO.ArgTuple = [], C = null>(
+                        event: K,
+                        method: OO.EventHandler<
+                            C,
+                            (this: C, ...args: [...A, ...EventMap[K]]) => void
+                        >,
+                        args?: A,
+                        context?: C
+                    ): this;
+                    on<K extends string, C = null>(
+                        event: K extends keyof EventMap ? never : K,
+                        method: OO.EventHandler<C>,
+                        args?: any[],
+                        context?: C
+                    ): this;
+
+                    once<K extends keyof EventMap>(
+                        event: K,
+                        listener: (this: null, ...args: EventMap[K]) => void
+                    ): this;
+                    once<K extends string>(
+                        event: K extends keyof EventMap ? never : K,
+                        listener: (this: null, ...args: any[]) => void
+                    ): this;
+
+                    off<K extends keyof EventMap, C = null>(
+                        event: K,
+                        method?: OO.EventHandler<C, (this: C, ...args: EventMap[K]) => void>,
+                        context?: C
+                    ): this;
+                    off<K extends string, C = null>(
+                        event: K extends keyof EventMap ? never : K,
+                        method?: OO.EventHandler<C>,
+                        context?: C
+                    ): this;
+
+                    emit<K extends keyof EventMap>(event: K, ...args: EventMap[K]): boolean;
+                    emit<K extends string>(
+                        event: K extends keyof EventMap ? never : K,
+                        ...args: any[]
+                    ): boolean;
+
+                    emitThrow<K extends keyof EventMap>(event: K, ...args: EventMap[K]): boolean;
+                    emitThrow<K extends string>(
+                        event: K extends keyof EventMap ? never : K,
+                        ...args: any[]
+                    ): boolean;
+                    connect<T extends Partial<Record<keyof EventMap, any>>, C>(
+                        context: C,
+                        methods: OO.EventConnectionMap<T, C, EventMap>
+                    ): this;
+
+                    disconnect<T extends Partial<Record<keyof EventMap, any>>, C>(
+                        context: C,
+                        methods?: OO.EventConnectionMap<T, C, EventMap>
+                    ): this;
+                    // #endregion
+                }
+
+                interface Constructor {
+                    /**
+                     * Create an instance of {@link mw.Upload.BookletLayout}.
+                     *
+                     * @param config Configuration options.
+                     */
+                    new (config?: ConfigOptions): mw.Upload.BookletLayout;
+                    prototype: Prototype;
+                    static: Static;
+                    super: OO.ui.BookletLayout.Constructor;
+                    /** @deprecated Use `super` instead */
+                    parent: OO.ui.BookletLayout.Constructor;
+                }
+            }
+
+            /**
+             *  Encapsulates the process of uploading a file
+             * to MediaWiki using the {@link mw.Upload upload model}.
+             * The booklet emits events that can be used to get the stashed
+             * upload and the final file. It can be extended to accept
+             * additional fields from the user for specific scenarios like
+             * for Commons, or campaigns.
+             *
+             * ## Structure
+             *
+             * The {@link OO.ui.BookletLayout booklet layout} has three steps:
+             *
+             * - **Upload**: Has a {@link OO.ui.SelectFileInputWidget field} to get the file
+             *   object.
+             *
+             * - **Information**: Has a {@link OO.ui.FormLayout form} to collect metadata. This can
+             *   be extended.
+             *
+             * - **Insert**: Has details on how to use the file that was uploaded.
+             *
+             * Each step has a form associated with it defined in {@link renderUploadForm},
+             * {@link renderInfoForm}, and {@link renderInfoForm}. The {@link getFile},
+             * {@link getFilename}, and {@link getText} methods are used to get the information
+             * filled in these forms, required to call
+             * {@link mw.Upload}.
+             *
+             * ## Usage
+             *
+             * See the {@link Dialog upload dialog}.
+             *
+             * The {@link mw.Upload.BookletLayout.event:fileUploaded fileUploaded},
+             * and {@link mw.Upload.BookletLayout.event:fileSaved fileSaved} events can
+             * be used to get details of the upload.
+             *
+             * ## Extending
+             *
+             * To extend using {@link mw.Upload}, override {@link renderInfoForm} to render the form
+             * required for the specific use-case. Update the {@link getFilename}, and
+             * {@link getText} methods to return data from your newly created form. If you added new
+             * fields you'll also have to update the {@link clear} method.
+             *
+             * If you plan to use a different upload model, apart from what is mentioned
+             * above, you'll also have to override the
+             * {@link mw.Upload.BookletLayout#createUpload createUpload} method to
+             * return the new model. The {@link #saveFile saveFile}, and
+             * the {@link mw.Upload.BookletLayout#uploadFile uploadFile} methods need to be
+             * overridden to use the new model and data returned from the forms.
+             */
+            interface BookletLayout extends BookletLayout.Props, BookletLayout.Prototype {}
+            const BookletLayout: BookletLayout.Constructor;
         }
     }
 }
